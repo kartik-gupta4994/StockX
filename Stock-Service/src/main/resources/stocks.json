@@ -1,0 +1,17 @@
+[
+  {
+    "symbol": "INFY",
+    "name": "Infosys Ltd",
+    "price": 1450.50
+  },
+  {
+    "symbol": "TCS",
+    "name": "Tata Consultancy Services",
+    "price": 3550.10
+  },
+  {
+    "symbol": "RELIANCE",
+    "name": "Reliance Industries",
+    "price": 2705.75
+  }
+]
