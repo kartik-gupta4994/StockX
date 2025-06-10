@@ -11,6 +11,7 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -39,7 +40,15 @@ public class OrderService {
         return toResponse(saved);
     }
 
-    //dont want to expose the Order Entity with response
+    public List<OrderResponse> getOrdersForUser(Long userId) {
+        List<Order> orders = orderDAO.findByUserId(userId);
+        return orders.stream()
+                .map(this::toResponse)
+                .toList();
+    }
+
+    //don't want to expose the Order Entity with response
+    //copyProperties is a utility method from Spring that copies matching fields by name/type from one object to another.
     private OrderResponse toResponse(Order order) {
         OrderResponse res = new OrderResponse();
         BeanUtils.copyProperties(order, res);
