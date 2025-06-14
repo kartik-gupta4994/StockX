@@ -1,5 +1,6 @@
 package StockX.Kartik.Authentication_Service.Service;
 
+import StockX.Authorization.JwtTokenUtil;
 import StockX.Kartik.Authentication_Service.DataTransfer.*;
 import StockX.Kartik.Authentication_Service.Repository.UserAuthRepo;
 import lombok.RequiredArgsConstructor;
@@ -20,6 +21,7 @@ public class AuthService {
     private final PasswordEncoder passwordEncoder;
     private final JwtTokenUtil jwtTokenUtil;
     private final AuthenticationManager authManager;
+    private final UserServiceClient userServiceClient;
 
     public void register(RegisterRequest req) {
         if (userRepository.existsByUsername(req.getUsername())) {
@@ -30,9 +32,19 @@ public class AuthService {
         user.setUsername(req.getUsername());
         user.setPassword(passwordEncoder.encode(req.getPassword()));
         userRepository.save(user);
+
+        //For User Service Data Saving
+        UserProfileRequest profile = new UserProfileRequest();
+        profile.setUsername(req.getUsername());
+        profile.setName(req.getName());
+        profile.setEmail(req.getEmail());
+
+        userServiceClient.createProfile(profile);
+
     }
 
     public AuthResponse login(LoginRequest request) {
+        System.out.println("inside login service");
         Authentication auth = authManager.authenticate(new UsernamePasswordAuthenticationToken(request.getUsername(), request.getPassword()));
         SecurityContextHolder.getContext().setAuthentication(auth);
 

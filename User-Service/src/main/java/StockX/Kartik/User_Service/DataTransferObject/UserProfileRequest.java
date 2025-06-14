@@ -1,4 +1,4 @@
-package StockX.Kartik.Authentication_Service.DataTransfer;
+package StockX.Kartik.User_Service.DataTransferObject;
 
 import lombok.Data;
 

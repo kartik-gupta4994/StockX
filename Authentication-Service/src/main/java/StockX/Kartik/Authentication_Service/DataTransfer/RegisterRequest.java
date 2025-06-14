@@ -9,5 +9,8 @@ public class RegisterRequest {
     @NotNull
     private String username;
     private String password;
+    // profile info
+    private String name;
+    private String email;
 
 }

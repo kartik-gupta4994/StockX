@@ -1,38 +1,39 @@
 package StockX.Kartik.User_Service.Service;
 
 import StockX.Kartik.User_Service.DataAccessObject.UserDao;
-import StockX.Kartik.User_Service.DataTransferObject.RegisterRequest;
 import StockX.Kartik.User_Service.DataTransferObject.User;
+import StockX.Kartik.User_Service.DataTransferObject.UserProfileRequest;
+import StockX.Kartik.User_Service.DataTransferObject.UserProfileResponse;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class UserService {
 
     @Autowired
     private UserDao userDao;
-    @Autowired private PasswordEncoder passwordEncoder;
 
-    public void register(RegisterRequest request) {
-        if (userDao.findByUsername(request.getUsername()).isPresent()) {
-            throw new RuntimeException("Username already taken");
-        }
-        User user = new User();
-        user.setUsername(request.getUsername());
-        user.setEmail(request.getEmail());
-        user.setPassword(passwordEncoder.encode(request.getPassword()));
-        userDao.save(user);
+    public UserProfileResponse getProfile(String username) {
+
+        Optional<User> optionalUser = Optional.of(userDao.findByUsername(username).orElseThrow());
+
+        User user = optionalUser.get();
+        return new UserProfileResponse(
+                user.getUsername(),
+                user.getEmail(),
+                user.getWalletBalance()
+        );
     }
 
-    public User getByUsername(String username) {
-        return userDao.findByUsername(username).orElseThrow();
-    }
-
-    public List<User> getUsers() {
-
-        return userDao.findAll();
+    public void createProfile(UserProfileRequest userProfileRequest) {
+        User profile = new User();
+        profile.setEmail(userProfileRequest.getEmail());
+        profile.setName(userProfileRequest.getName());
+        profile.setUsername(userProfileRequest.getUsername());
+        userDao.save(profile);
     }
 }

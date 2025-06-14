@@ -8,7 +8,7 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <module name="Registry-Service" />
-        <module name="User-Service" />
+        <module name="Auth-Common" />
       </profile>
       <profile name="Annotation profile for Authentication-Service" enabled="true">
         <sourceOutputDir name="target/generated-sources/annotations" />
@@ -16,13 +16,13 @@
         <outputRelativeToContentRoot value="true" />
         <processorPath useClasspath="false">
           <entry name="$MAVEN_REPOSITORY$/org/projectlombok/lombok/1.18.38/lombok-1.18.38.jar" />
-          <entry name="$MAVEN_REPOSITORY$/org/projectlombok/lombok/1.18.38/lombok-1.18.38.jar" />
         </processorPath>
         <module name="Fund-Service" />
         <module name="Order-Service" />
         <module name="Authentication-Service" />
         <module name="Stock-Service" />
         <module name="Portfolio-Service" />
+        <module name="User-Service" />
       </profile>
     </annotationProcessing>
   </component>
@@ -34,7 +34,7 @@
       <module name="Portfolio-Service" options="-parameters" />
       <module name="Registry-Service" options="-parameters" />
       <module name="Stock-Service" options="-parameters" />
-      <module name="User-Service" options="-parameters" />
+      <module name="User-Service" options="" />
     </option>
   </component>
 </project>

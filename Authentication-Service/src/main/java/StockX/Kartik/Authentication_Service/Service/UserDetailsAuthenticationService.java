@@ -22,6 +22,7 @@ public class UserDetailsAuthenticationService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+        System.out.println("inside load by user name");
         Optional<UserIdentity> user = userAuthRepo.findByUsername(username);
 
         return UserIdentityPrinciple.fromUser(user.get());

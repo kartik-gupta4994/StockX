@@ -9,15 +9,13 @@ import java.time.Instant;
 
 @Entity
 @Data
-@Table(name = "app_user")
+@Table(name = "user_profiles")
 public class User {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
     private String username;
+    private String name;
     private String email;
-    private String password;
     private BigDecimal walletBalance = BigDecimal.ZERO;
     private final Timestamp createdAt = Timestamp.from(Instant.now());
 }
