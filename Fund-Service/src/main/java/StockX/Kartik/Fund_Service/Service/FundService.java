@@ -16,12 +16,12 @@ public class FundService {
     private final FundTransactionRepository fundRepo;
 
     @Transactional
-    public void addFunds(String userId, double amount) {
+    public void addFunds(long userId, double amount) {
         fundRepo.save(new FundTransaction(null, userId, amount, TransactionType.DEPOSIT, null));
     }
 
     @Transactional
-    public void withdrawFunds(String userId, double amount) {
+    public void withdrawFunds(long userId, double amount) {
         double currentBalance = fundRepo.getBalance(userId);
         if (currentBalance < amount) {
             throw new IllegalArgumentException("Insufficient funds");
@@ -30,7 +30,7 @@ public class FundService {
         fundRepo.save(new FundTransaction(null, userId, -amount, TransactionType.WITHDRAW, null));
     }
 
-    public double getBalance(String userId) {
+    public double getBalance(long userId) {
         return Optional.ofNullable(fundRepo.getBalance(userId)).orElse(0.0);
     }
 }

@@ -17,7 +17,7 @@ public class FundTransaction {
     @GeneratedValue
     private UUID id;
 
-    private String userId;
+    private long userId;
     private Double amount;
 
     @Enumerated(EnumType.STRING)

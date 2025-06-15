@@ -9,6 +9,6 @@ import java.util.UUID;
 
 public interface FundTransactionRepository extends JpaRepository<FundTransaction, UUID> {
     @Query("SELECT SUM(f.amount) FROM FundTransaction f WHERE f.userId = :userId")
-    Double getBalance(@Param("userId") String userId);
+    Double getBalance(@Param("userId") long userId);
 }
 

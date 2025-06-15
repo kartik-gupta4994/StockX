@@ -11,7 +11,7 @@
         <module name="DTO-Common" />
         <module name="Auth-Common" />
       </profile>
-      <profile name="Annotation profile for Portfolio-Service" enabled="true">
+      <profile name="Annotation profile for Fund-Service" enabled="true">
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
@@ -30,7 +30,7 @@
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
       <module name="Authentication-Service" options="" />
-      <module name="Fund-Service" options="-parameters" />
+      <module name="Fund-Service" options="" />
       <module name="Order-Service" options="" />
       <module name="Portfolio-Service" options="" />
       <module name="Registry-Service" options="-parameters" />
