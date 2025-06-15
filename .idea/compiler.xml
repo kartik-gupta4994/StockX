@@ -10,7 +10,7 @@
         <module name="Registry-Service" />
         <module name="Auth-Common" />
       </profile>
-      <profile name="Annotation profile for Stock-Service" enabled="true">
+      <profile name="Annotation profile for Order-Service" enabled="true">
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
@@ -30,8 +30,8 @@
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
       <module name="Authentication-Service" options="" />
       <module name="Fund-Service" options="-parameters" />
-      <module name="Order-Service" options="-parameters" />
-      <module name="Portfolio-Service" options="-parameters" />
+      <module name="Order-Service" options="" />
+      <module name="Portfolio-Service" options="" />
       <module name="Registry-Service" options="-parameters" />
       <module name="Stock-Service" options="" />
       <module name="User-Service" options="" />

@@ -12,20 +12,16 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
 public class OrderService {
 
     private final OrderDAO orderDAO;
-    private final StockValidatorClient stockValidatorClient;
 
     @Transactional
     public OrderResponse placeOrder(Long userId, PlaceOrderRequest request) {
-        // Validate stock
-        if (!stockValidatorClient.isValidStock(request.getStockSymbol())) {
-            throw new IllegalArgumentException("Invalid stock symbol");
-        }
 
         Order order = new Order();
         order.setUserId(userId);
@@ -44,7 +40,7 @@ public class OrderService {
         List<Order> orders = orderDAO.findByUserId(userId);
         return orders.stream()
                 .map(this::toResponse)
-                .toList();
+                .collect(Collectors.toList());
     }
 
     //don't want to expose the Order Entity with response

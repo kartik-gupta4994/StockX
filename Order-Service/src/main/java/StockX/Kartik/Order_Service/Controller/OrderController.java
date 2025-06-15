@@ -1,14 +1,15 @@
 package StockX.Kartik.Order_Service.Controller;
 
+import StockX.Authorization.UserPrincipal;
 import StockX.Kartik.Order_Service.DataTransfer.OrderResponse;
 import StockX.Kartik.Order_Service.DataTransfer.PlaceOrderRequest;
 import StockX.Kartik.Order_Service.Service.OrderService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
-import java.nio.file.attribute.UserPrincipal;
 import java.util.List;
 
 @RestController
@@ -21,16 +22,15 @@ public class OrderController {
     @PostMapping
     public ResponseEntity<OrderResponse> placeOrder(
             @RequestBody @Valid PlaceOrderRequest request,
-            @RequestHeader("Authorization") String token)//don't use this parameter and verification logic should always be in securityFilterChain
+            @AuthenticationPrincipal UserPrincipal user)
+            //@RequestHeader("Authorization") String token //don't use this parameter and verification logic should always be in securityFilterChain
     {
-
-        //Long userId = JwtUtil.extractUserId(token); // implement or reuse this from user-service
-        return ResponseEntity.ok(orderService.placeOrder((long)1, request));
+        return ResponseEntity.ok(orderService.placeOrder(user.getUserId(), request));
     }
 
     @GetMapping
-    public ResponseEntity<List<OrderResponse>> getUserOrders(){//Need to implement @AuthenticationPrincipal UserPrincipal user) {
-        return ResponseEntity.ok(orderService.getOrdersForUser((long)1));
+    public ResponseEntity<List<OrderResponse>> getUserOrders(@AuthenticationPrincipal UserPrincipal user) {
+        return ResponseEntity.ok(orderService.getOrdersForUser(user.getUserId()));
     }
 
 }
