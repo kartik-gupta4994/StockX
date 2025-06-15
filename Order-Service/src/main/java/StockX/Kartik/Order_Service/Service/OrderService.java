@@ -1,8 +1,9 @@
 package StockX.Kartik.Order_Service.Service;
 
 import StockX.Kartik.Order_Service.DataTransfer.Order;
-import StockX.Kartik.Order_Service.DataTransfer.OrderResponse;
-import StockX.Kartik.Order_Service.DataTransfer.OrderStatus;
+import StockX.DataTransfer.OrderResponse;
+import StockX.DataTransfer.OrderType;
+import StockX.DataTransfer.OrderStatus;
 import StockX.Kartik.Order_Service.DataTransfer.PlaceOrderRequest;
 import StockX.Kartik.Order_Service.Repository.OrderDAO;
 import jakarta.transaction.Transactional;
@@ -44,11 +45,15 @@ public class OrderService {
     }
 
     //don't want to expose the Order Entity with response
-    //copyProperties is a utility method from Spring that copies matching fields by name/type from one object to another.
+    //Use @Builder in OrderResponse by Lombok
     private OrderResponse toResponse(Order order) {
-        OrderResponse res = new OrderResponse();
-        BeanUtils.copyProperties(order, res);
-        return res;
+        return OrderResponse.builder()
+                .stockSymbol(order.getStockSymbol())
+                .quantity(order.getQuantity())
+                .priceAtOrder(order.getPrice())
+                .orderType(order.getType())
+                .status(order.getStatus())
+                .build();
     }
 }
 

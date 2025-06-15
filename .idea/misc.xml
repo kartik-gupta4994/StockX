@@ -12,6 +12,7 @@
         <option value="$PROJECT_DIR$/Authentication-Service/pom.xml" />
         <option value="$PROJECT_DIR$/Registry-Service/pom.xml" />
         <option value="$PROJECT_DIR$/Auth-Common/pom.xml" />
+        <option value="$PROJECT_DIR$/DTO-Common/pom.xml" />
       </list>
     </option>
   </component>

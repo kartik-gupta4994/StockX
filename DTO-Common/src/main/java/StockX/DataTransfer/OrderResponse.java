@@ -1,20 +1,19 @@
-package StockX.Kartik.Portfolio_Service.DataTransfer;
+package StockX.DataTransfer;
 
-import StockX.DataTransfer.OrderStatus;
-import StockX.DataTransfer.OrderType;
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
-import lombok.ToString;
+import lombok.NoArgsConstructor;
 
-@ToString
 @Data
 @Builder
-public class OrderDTO {
+@AllArgsConstructor
+@NoArgsConstructor
+public class OrderResponse {
     private String stockSymbol;
     private int quantity;
     private double priceAtOrder;
     private OrderType orderType;  // BUY or SELL
     private OrderStatus status;
-
 }
 

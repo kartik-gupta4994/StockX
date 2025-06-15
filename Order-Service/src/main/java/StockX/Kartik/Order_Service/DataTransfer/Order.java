@@ -2,7 +2,8 @@ package StockX.Kartik.Order_Service.DataTransfer;
 
 import jakarta.persistence.*;
 import lombok.Data;
-
+import StockX.DataTransfer.OrderType;
+import StockX.DataTransfer.OrderStatus;
 import java.time.LocalDateTime;
 
 @Entity

@@ -8,9 +8,10 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <module name="Registry-Service" />
+        <module name="DTO-Common" />
         <module name="Auth-Common" />
       </profile>
-      <profile name="Annotation profile for Order-Service" enabled="true">
+      <profile name="Annotation profile for Portfolio-Service" enabled="true">
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />

@@ -1,7 +1,7 @@
 package StockX.Kartik.Order_Service.Controller;
 
 import StockX.Authorization.UserPrincipal;
-import StockX.Kartik.Order_Service.DataTransfer.OrderResponse;
+import StockX.DataTransfer.OrderResponse;
 import StockX.Kartik.Order_Service.DataTransfer.PlaceOrderRequest;
 import StockX.Kartik.Order_Service.Service.OrderService;
 import jakarta.validation.Valid;
@@ -19,7 +19,7 @@ public class OrderController {
 
     private final OrderService orderService;
 
-    @PostMapping
+    @PostMapping("/placeOrder")
     public ResponseEntity<OrderResponse> placeOrder(
             @RequestBody @Valid PlaceOrderRequest request,
             @AuthenticationPrincipal UserPrincipal user)
