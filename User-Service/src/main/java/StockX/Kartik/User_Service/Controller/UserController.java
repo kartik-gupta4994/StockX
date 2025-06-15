@@ -1,7 +1,6 @@
 package StockX.Kartik.User_Service.Controller;
 
 import StockX.Authorization.UserPrincipal;
-import StockX.Kartik.User_Service.DataTransferObject.User;
 import StockX.Kartik.User_Service.DataTransferObject.UserProfileRequest;
 import StockX.Kartik.User_Service.DataTransferObject.UserProfileResponse;
 import StockX.Kartik.User_Service.Service.UserService;
@@ -10,7 +9,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Optional;
 
 // === UserController ===
 @RestController
@@ -26,11 +24,11 @@ public class UserController {
         return ResponseEntity.ok(userService.getProfile(userPrincipal.getUsername()));
     }
 
+    //Will be called by authentication client via Feign
     @PostMapping("/internal/create-profile")
     public ResponseEntity<?> createProfile(@RequestBody UserProfileRequest request) {
 
         userService.createProfile(request);
-
         return ResponseEntity.ok().build();
     }
 

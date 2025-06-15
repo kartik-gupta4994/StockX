@@ -5,8 +5,6 @@ import StockX.Kartik.Stock_Service.DataTransfer.Stock;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.CommandLineRunner;
-import org.springframework.context.annotation.Bean;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
@@ -47,7 +45,7 @@ public class StockService {
         ObjectMapper mapper = new ObjectMapper();//TO convert JSON data to java objects
 
         //generic type info (like List<Stock>) is erased at runtime in Java, so need TypeReference
-        TypeReference<List<Stock>> typeRef = new TypeReference<>() {};
+        TypeReference<List<Stock>> typeRef = new TypeReference<List<Stock>>() {};
         InputStream inputStream = new ClassPathResource("stocks.json").getInputStream();
 
         List<Stock> stocks = mapper.readValue(inputStream, typeRef);
