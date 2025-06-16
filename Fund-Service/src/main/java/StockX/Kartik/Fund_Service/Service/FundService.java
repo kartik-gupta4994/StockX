@@ -1,5 +1,6 @@
 package StockX.Kartik.Fund_Service.Service;
 
+import StockX.DataTransfer.OrderPlaceResponse;
 import StockX.Kartik.Fund_Service.DataTransfer.FundTransaction;
 import StockX.Kartik.Fund_Service.DataTransfer.TransactionType;
 import StockX.Kartik.Fund_Service.Repository.FundTransactionRepository;
@@ -21,13 +22,13 @@ public class FundService {
     }
 
     @Transactional
-    public void withdrawFunds(long userId, double amount) {
+    public OrderPlaceResponse withdrawFunds(long userId, double amount) {
         double currentBalance = fundRepo.getBalance(userId);
-        if (currentBalance < amount) {
-            throw new IllegalArgumentException("Insufficient funds");
-        }
+        if (currentBalance < amount)
+            return  new OrderPlaceResponse(false, "Insufficient balance");
 
         fundRepo.save(new FundTransaction(null, userId, -amount, TransactionType.WITHDRAW, null));
+        return new OrderPlaceResponse(true, "Funds withdrawn successfully.");
     }
 
     public double getBalance(long userId) {

@@ -15,5 +15,7 @@ public class OrderResponse {
     private double priceAtOrder;
     private OrderType orderType;  // BUY or SELL
     private OrderStatus status;
+    private String message;
+
 }
 

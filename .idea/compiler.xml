@@ -11,7 +11,7 @@
         <module name="DTO-Common" />
         <module name="Auth-Common" />
       </profile>
-      <profile name="Annotation profile for Fund-Service" enabled="true">
+      <profile name="Annotation profile for StockX-Backend" enabled="true">
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
@@ -20,8 +20,8 @@
         </processorPath>
         <module name="Fund-Service" />
         <module name="Order-Service" />
-        <module name="Stock-Service" />
         <module name="Authentication-Service" />
+        <module name="Stock-Service" />
         <module name="Portfolio-Service" />
         <module name="User-Service" />
       </profile>
