@@ -22,7 +22,7 @@ public class OrderService {
 
     private final OrderDAO orderDAO;
     private final FundsClient fundsClient;
-
+    private final OrderProcessorMock orderProcessor;
     @Transactional
     public OrderResponse placeOrder(Long userId, PlaceOrderRequest request){
 
@@ -48,6 +48,7 @@ public class OrderService {
         order.setCreatedAt(LocalDateTime.now());
 
         Order saved = orderDAO.save(order);
+        orderProcessor.processOrderAsync(saved);
         return toResponse(saved);
     }
 
