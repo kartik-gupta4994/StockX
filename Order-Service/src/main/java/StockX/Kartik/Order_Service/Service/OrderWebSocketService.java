@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Controller;
 import org.springframework.stereotype.Service;
+import org.springframework.web.socket.WebSocketSession;
 
 import java.util.Map;
 
@@ -15,6 +16,7 @@ public class OrderWebSocketService {
     private SimpMessagingTemplate messagingTemplate;
 
     public void sendOrderStatusUpdate(Order order) {
+
         messagingTemplate.convertAndSend(
                 "/topic/order-status/" + order.getUserId(),
                 Map.of("orderId", order.getId(), "status", order.getStatus().name())

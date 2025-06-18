@@ -20,7 +20,7 @@ class SecurityConfiguration {
     public SecurityFilterChain configure(HttpSecurity http, JwtTokenUtil jwtUtil) throws Exception {
         http.csrf(csrf ->csrf.disable())
                 .authorizeHttpRequests(request -> request
-                        .requestMatchers("/ws/**").permitAll()
+                        .requestMatchers("/ws/**","/topic/**").permitAll()
                 .anyRequest().authenticated())
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .addFilterBefore(new JwtFilter(jwtUtil), UsernamePasswordAuthenticationFilter.class);
