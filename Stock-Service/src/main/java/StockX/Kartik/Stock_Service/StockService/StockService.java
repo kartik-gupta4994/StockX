@@ -4,27 +4,30 @@ import StockX.Kartik.Stock_Service.DataAccess.StockDAO;
 import StockX.Kartik.Stock_Service.DataTransfer.Stock;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.ClassPathResource;
+import org.springframework.http.ResponseEntity;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.RestTemplate;
 
 import java.io.IOException;
 import java.io.InputStream;
 import java.math.BigDecimal;
-import java.math.RoundingMode;
-import java.time.LocalDateTime;
 import java.util.List;
-import java.util.Random;
+import java.util.Map;
 import java.util.UUID;
 
 @Service
+@RequiredArgsConstructor()
 public class StockService {
 
-    @Autowired
-    private StockDAO stockDAO;
+    private final StockDAO stockDAO;
+    private final RestTemplate restTemplate;
 
-    private final Random random = new Random();
+    @Value("${Api_Key}")
+    private String API_Key;
 
     public List<Stock> getAllStocks() {
         return stockDAO.findAll();
@@ -45,7 +48,7 @@ public class StockService {
         ObjectMapper mapper = new ObjectMapper();//TO convert JSON data to java objects
 
         //generic type info (like List<Stock>) is erased at runtime in Java, so need TypeReference
-        TypeReference<List<Stock>> typeRef = new TypeReference<List<Stock>>() {};
+        TypeReference<List<Stock>> typeRef = new TypeReference<>() {};
         InputStream inputStream = new ClassPathResource("stocks.json").getInputStream();
 
         List<Stock> stocks = mapper.readValue(inputStream, typeRef);
@@ -53,24 +56,29 @@ public class StockService {
         stockDAO.saveAll(stocks);
     }
 
-    @Scheduled(fixedRate = 10000) // Every 10 seconds
-    public void updateStockPricesMock() {
+    @Scheduled(fixedRate = 60000) // Every 1 minute
+    public void updateStockPrices() {
         List<Stock> stocks = stockDAO.findAll();
 
         for (Stock stock : stocks) {
-            BigDecimal currentPrice = stock.getPrice();
+            try {
+                String symbol = stock.getSymbol();  // e.g. "AAPL" or "TCS.BSE"
+                String url = "https://api.twelvedata.com/price?symbol=" + symbol + "&apikey=" + API_Key;
 
-            // Random percentage between -5% to +5%
-            double changePercent = (random.nextDouble() * 10) - 5;
-            BigDecimal change = currentPrice.multiply(BigDecimal.valueOf(changePercent / 100));
+                ResponseEntity<Map> response = restTemplate.getForEntity(url, Map.class);
+                Map data = response.getBody();
 
-            BigDecimal newPrice = currentPrice.add(change).setScale(2, RoundingMode.HALF_UP);
-            stock.setPrice(newPrice);
-            stock.setLastUpdated(LocalDateTime.now());
+                if (data != null && data.containsKey("price")) {
+                    double newPrice = Double.parseDouble((String) data.get("price"));
+                    stock.setPrice(BigDecimal.valueOf(newPrice));
+                    stockDAO.save(stock);
+                } else {
+                    System.out.println("Could not fetch price for " + symbol + ": " + data);
+                }
+            } catch (Exception e) {
+                System.out.println("Error updating " + stock.getSymbol() + ": " + e.getMessage());
+            }
         }
-
-        stockDAO.saveAll(stocks);
-        System.out.println("✅ Prices updated at " + LocalDateTime.now());
     }
 }
 

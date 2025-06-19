@@ -1,17 +1,7 @@
 [
-  {
-    "symbol": "INFY",
-    "name": "Infosys Ltd",
-    "price": 1450.50
-  },
-  {
-    "symbol": "TCS",
-    "name": "Tata Consultancy Services",
-    "price": 3550.10
-  },
-  {
-    "symbol": "RELIANCE",
-    "name": "Reliance Industries",
-    "price": 2705.75
-  }
+  { "symbol": "000001", "name": "Ping An Bank Co., Ltd.", "price": 0 },
+  { "symbol": "000002", "name": "China Vanke Co., Ltd.", "price": 0 },
+  { "symbol": "000004", "name": "Shenzhen Guohua Network Co. Ltd.", "price": 0 },
+  { "symbol": "AAPL", "name": "Apple Inc." , "price": 0},
+  { "symbol": "GOOGL", "name": "Alphabet Inc." , "price": 0}
 ]
