@@ -1,4 +1,4 @@
-# StockT (Backend)
+# StockX (Backend)
 
 A backend microservices application simulating the core features of a stock trading platform. Built with **Spring Boot** and designed for scalability, security, and ease of integration.
 
